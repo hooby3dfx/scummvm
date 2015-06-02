@@ -277,17 +277,36 @@ void Normal5x6(const uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPi
 			*(uint16 *)(r + 6) = color;
 			*(uint16 *)(r + 8) = color;
 			
-			*(uint16 *)(r + 10 + dstPitch) = color;
-			*(uint16 *)(r + 12 + dstPitch) = color;
-			*(uint16 *)(r + 14 + dstPitch) = color;
-			*(uint16 *)(r + 16 + dstPitch) = color;
-			*(uint16 *)(r + 18 + dstPitch) = color;
+			*(uint16 *)(r + 0 + dstPitch) = color;
+			*(uint16 *)(r + 2 + dstPitch) = color;
+			*(uint16 *)(r + 4 + dstPitch) = color;
+			*(uint16 *)(r + 6 + dstPitch) = color;
+			*(uint16 *)(r + 8 + dstPitch) = color;
 			
-			*(uint16 *)(r + 20 + dstPitch2) = color;
-			*(uint16 *)(r + 22 + dstPitch2) = color;
-			*(uint16 *)(r + 24 + dstPitch2) = color;
-			*(uint16 *)(r + 28 + dstPitch2) = color;
-			*(uint16 *)(r + 30 + dstPitch2) = color;
+			*(uint16 *)(r + 0 + dstPitch2) = color;
+			*(uint16 *)(r + 2 + dstPitch2) = color;
+			*(uint16 *)(r + 4 + dstPitch2) = color;
+			*(uint16 *)(r + 6 + dstPitch2) = color;
+			*(uint16 *)(r + 8 + dstPitch2) = color;
+			
+			*(uint16 *)(r + 0 + dstPitch3) = color;
+			*(uint16 *)(r + 2 + dstPitch3) = color;
+			*(uint16 *)(r + 4 + dstPitch3) = color;
+			*(uint16 *)(r + 6 + dstPitch3) = color;
+			*(uint16 *)(r + 8 + dstPitch3) = color;
+			
+			*(uint16 *)(r + 0 + dstPitch4) = color;
+			*(uint16 *)(r + 2 + dstPitch4) = color;
+			*(uint16 *)(r + 4 + dstPitch4) = color;
+			*(uint16 *)(r + 6 + dstPitch4) = color;
+			*(uint16 *)(r + 8 + dstPitch4) = color;
+			
+			*(uint16 *)(r + 0 + dstPitch5) = color;
+			*(uint16 *)(r + 2 + dstPitch5) = color;
+			*(uint16 *)(r + 4 + dstPitch5) = color;
+			*(uint16 *)(r + 6 + dstPitch5) = color;
+			*(uint16 *)(r + 8 + dstPitch5) = color;
+			
 		}
 		srcPtr += srcPitch;
 		dstPtr += dstPitch6;
