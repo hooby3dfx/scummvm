@@ -253,6 +253,47 @@ void Normal3x(const uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPit
 	}
 }
 
+/**
+ * Trivial nearest-neighbor 3x scaler.
+ */
+void Normal5x6(const uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch,
+							int width, int height) {
+	uint8 *r;
+	const uint32 dstPitch2 = dstPitch * 2;
+	const uint32 dstPitch3 = dstPitch * 3;
+	const uint32 dstPitch4 = dstPitch * 4;
+	const uint32 dstPitch5 = dstPitch * 5;
+	const uint32 dstPitch6 = dstPitch * 6;
+
+	assert(IS_ALIGNED(dstPtr, 2));
+	while (height--) {
+		r = dstPtr;
+		for (int i = 0; i < width; ++i, r += 30) {
+			uint16 color = *(((const uint16 *)srcPtr) + i);
+
+			*(uint16 *)(r + 0) = color;
+			*(uint16 *)(r + 2) = color;
+			*(uint16 *)(r + 4) = color;
+			*(uint16 *)(r + 6) = color;
+			*(uint16 *)(r + 8) = color;
+			
+			*(uint16 *)(r + 10 + dstPitch) = color;
+			*(uint16 *)(r + 12 + dstPitch) = color;
+			*(uint16 *)(r + 14 + dstPitch) = color;
+			*(uint16 *)(r + 16 + dstPitch) = color;
+			*(uint16 *)(r + 18 + dstPitch) = color;
+			
+			*(uint16 *)(r + 20 + dstPitch2) = color;
+			*(uint16 *)(r + 22 + dstPitch2) = color;
+			*(uint16 *)(r + 24 + dstPitch2) = color;
+			*(uint16 *)(r + 28 + dstPitch2) = color;
+			*(uint16 *)(r + 30 + dstPitch2) = color;
+		}
+		srcPtr += srcPitch;
+		dstPtr += dstPitch6;
+	}
+}
+
 #define interpolate_1_1		interpolate16_1_1<ColorMask>
 #define interpolate_1_1_1_1	interpolate16_1_1_1_1<ColorMask>
 

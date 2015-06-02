@@ -58,6 +58,7 @@ static const OSystem::GraphicsMode s_supportedGraphicsModes[] = {
 #endif
 	{"tv2x", "TV2x", GFX_TV2X},
 	{"dotmatrix", "DotMatrix", GFX_DOTMATRIX},
+	{"normal56", "Normal5x6", GFX_NORMAL56},
 #endif
 	{0, 0, 0}
 };
@@ -81,7 +82,8 @@ static const int s_gfxModeSwitchTable[][4] = {
 		{ GFX_NORMAL, GFX_SUPER2XSAI, -1, -1 },
 		{ GFX_NORMAL, GFX_SUPEREAGLE, -1, -1 },
 		{ GFX_NORMAL, GFX_TV2X, -1, -1 },
-		{ GFX_NORMAL, GFX_DOTMATRIX, -1, -1 }
+		{ GFX_NORMAL, GFX_DOTMATRIX, -1, -1 },
+		{ GFX_NORMAL, GFX_NORMAL56, -1, -1 }
 	};
 
 #ifdef USE_SCALERS
@@ -541,6 +543,9 @@ bool SurfaceSdlGraphicsManager::setGraphicsMode(int mode) {
 	case GFX_DOTMATRIX:
 		newScaleFactor = 2;
 		break;
+	case GFX_NORMAL56:
+		newScaleFactor = 6;
+		break;
 #endif // USE_SCALERS
 
 	default:
@@ -604,6 +609,9 @@ void SurfaceSdlGraphicsManager::setGraphicsModeIntern() {
 		break;
 	case GFX_DOTMATRIX:
 		newScalerProc = DotMatrix;
+		break;
+	case GFX_NORMAL56:
+		newScalerProc = Normal5x6;
 		break;
 #endif // USE_SCALERS
 
