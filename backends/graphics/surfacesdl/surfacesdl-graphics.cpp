@@ -544,7 +544,7 @@ bool SurfaceSdlGraphicsManager::setGraphicsMode(int mode) {
 		newScaleFactor = 2;
 		break;
 	case GFX_NORMAL56:
-		newScaleFactor = 6;
+		newScaleFactor = 5;
 		break;
 #endif // USE_SCALERS
 
@@ -677,7 +677,7 @@ void SurfaceSdlGraphicsManager::initSize(uint w, uint h, const Graphics::PixelFo
 }
 
 int SurfaceSdlGraphicsManager::effectiveScreenHeight() const {
-	return _videoMode.scaleFactor *
+	return (_videoMode.mode == GFX_NORMAL56 ? 6 : _videoMode.scaleFactor) *
 				(_videoMode.aspectRatioCorrection
 					? real2Aspect(_videoMode.screenHeight)
 					: _videoMode.screenHeight);
@@ -754,6 +754,9 @@ bool SurfaceSdlGraphicsManager::loadGFXMode() {
 
 	if (_videoMode.aspectRatioCorrection)
 		_videoMode.overlayHeight = real2Aspect(_videoMode.overlayHeight);
+	
+	if(_videoMode.mode == GFX_NORMAL56)
+		_videoMode.overlayHeight = _videoMode.screenHeight * 6;
 
 	_videoMode.hardwareWidth = _videoMode.screenWidth * _videoMode.scaleFactor;
 	_videoMode.hardwareHeight = effectiveScreenHeight();
@@ -1035,6 +1038,8 @@ void SurfaceSdlGraphicsManager::internUpdateScreen() {
 
 		if (_videoMode.aspectRatioCorrection && !_overlayVisible)
 			blackrect.h = real2Aspect(blackrect.h - 1) + 1;
+		if (_videoMode.mode == GFX_NORMAL56)
+			blackrect.h = (Uint16)(_newShakePos * 6);
 
 		SDL_FillRect(_hwscreen, &blackrect, 0);
 
@@ -1144,7 +1149,10 @@ void SurfaceSdlGraphicsManager::internUpdateScreen() {
 #ifdef USE_SCALERS
 				orig_dst_y = dst_y;
 #endif
-				dst_y = dst_y * scale1;
+				if (_videoMode.mode == GFX_NORMAL56)
+					dst_y = dst_y * 6;
+				else
+					dst_y = dst_y * scale1;
 
 				if (_videoMode.aspectRatioCorrection && !_overlayVisible)
 					dst_y = real2Aspect(dst_y);
@@ -1158,6 +1166,8 @@ void SurfaceSdlGraphicsManager::internUpdateScreen() {
 			r->y = dst_y;
 			r->w = r->w * scale1;
 			r->h = dst_h * scale1;
+			if (_videoMode.mode == GFX_NORMAL56)
+					r->h = dst_h * 6;
 
 #ifdef USE_SCALERS
 			if (_videoMode.aspectRatioCorrection && orig_dst_y < height && !_overlayVisible)
@@ -1197,7 +1207,10 @@ void SurfaceSdlGraphicsManager::internUpdateScreen() {
 				if (h > height - y)
 					h = height - y;
 
-				y *= scale1;
+				if (_videoMode.mode == GFX_NORMAL56)
+					y *= 6;
+				else
+					y *= scale1;
 
 				if (_videoMode.aspectRatioCorrection && !_overlayVisible)
 					y = real2Aspect(y);
@@ -1605,6 +1618,8 @@ void SurfaceSdlGraphicsManager::showOverlay() {
 	x = _mouseCurState.x * _videoMode.scaleFactor;
 	if (_videoMode.aspectRatioCorrection)
 		y = real2Aspect(_mouseCurState.y) * _videoMode.scaleFactor;
+	//else if (_videoMode.mode == GFX_NORMAL56)
+	//	y = _mouseCurState.y * 6;
 	else
 		y = _mouseCurState.y * _videoMode.scaleFactor;
 
@@ -1629,6 +1644,8 @@ void SurfaceSdlGraphicsManager::hideOverlay() {
 	y = _mouseCurState.y / _videoMode.scaleFactor;
 	if (_videoMode.aspectRatioCorrection)
 		y = aspect2Real(y);
+	//else if (_videoMode.mode == GFX_NORMAL56)
+	//	y = _mouseCurState.y / 6;
 
 	warpMouse(x, y);
 
@@ -1764,6 +1781,9 @@ void SurfaceSdlGraphicsManager::setMousePos(int x, int y) {
 }
 
 void SurfaceSdlGraphicsManager::warpMouse(int x, int y) {
+
+	debug("bbtest warpMouse");
+
 	int y1 = y;
 
 	// Don't change actual mouse position, when mouse is outside of our window (in case of windowed mode)
@@ -1777,7 +1797,7 @@ void SurfaceSdlGraphicsManager::warpMouse(int x, int y) {
 
 	if (_mouseCurState.x != x || _mouseCurState.y != y) {
 		if (!_overlayVisible)
-			_window->warpMouseInWindow(x * _videoMode.scaleFactor, y1 * _videoMode.scaleFactor);
+			_window->warpMouseInWindow(x * _videoMode.scaleFactor, (_videoMode.mode==GFX_NORMAL56 ? y1*6 : y1 * _videoMode.scaleFactor));
 		else
 			_window->warpMouseInWindow(x, y1);
 
@@ -1814,6 +1834,8 @@ void SurfaceSdlGraphicsManager::setMouseCursor(const void *buf, uint w, uint h, 
 	_mouseKeyColor = keycolor;
 
 	_cursorDontScale = dontScale;
+//	if(_videoMode.mode==GFX_NORMAL56)
+//		_cursorDontScale = true;
 
 	if (_mouseCurState.w != (int)w || _mouseCurState.h != (int)h) {
 		_mouseCurState.w = w;
@@ -2086,7 +2108,10 @@ void SurfaceSdlGraphicsManager::drawMouse() {
 		dst.y = real2Aspect(dst.y);
 
 	dst.x = scale * dst.x - _mouseCurState.rHotX;
-	dst.y = scale * dst.y - _mouseCurState.rHotY;
+	if(_videoMode.mode==GFX_NORMAL56)
+		dst.y = 6 * dst.y - _mouseCurState.rHotY;
+	else
+		dst.y = scale * dst.y - _mouseCurState.rHotY;
 	dst.w = _mouseCurState.rW;
 	dst.h = _mouseCurState.rH;
 
@@ -2363,7 +2388,10 @@ void SurfaceSdlGraphicsManager::notifyVideoExpose() {
 void SurfaceSdlGraphicsManager::transformMouseCoordinates(Common::Point &point) {
 	if (!_overlayVisible) {
 		point.x /= _videoMode.scaleFactor;
-		point.y /= _videoMode.scaleFactor;
+		if (_videoMode.mode == GFX_NORMAL56)
+			point.y /= 6;
+		else
+			point.y /= _videoMode.scaleFactor;
 		if (_videoMode.aspectRatioCorrection)
 			point.y = aspect2Real(point.y);
 	}
