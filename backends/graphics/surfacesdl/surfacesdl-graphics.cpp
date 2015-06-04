@@ -1149,10 +1149,7 @@ void SurfaceSdlGraphicsManager::internUpdateScreen() {
 #ifdef USE_SCALERS
 				orig_dst_y = dst_y;
 #endif
-				if (_videoMode.mode == GFX_NORMAL56)
-					dst_y = dst_y * 6;
-				else
-					dst_y = dst_y * scale1;
+				dst_y = dst_y * scale1;
 
 				if (_videoMode.aspectRatioCorrection && !_overlayVisible)
 					dst_y = real2Aspect(dst_y);
@@ -1166,8 +1163,6 @@ void SurfaceSdlGraphicsManager::internUpdateScreen() {
 			r->y = dst_y;
 			r->w = r->w * scale1;
 			r->h = dst_h * scale1;
-			if (_videoMode.mode == GFX_NORMAL56)
-					r->h = dst_h * 6;
 
 #ifdef USE_SCALERS
 			if (_videoMode.aspectRatioCorrection && orig_dst_y < height && !_overlayVisible)
@@ -1207,10 +1202,7 @@ void SurfaceSdlGraphicsManager::internUpdateScreen() {
 				if (h > height - y)
 					h = height - y;
 
-				if (_videoMode.mode == GFX_NORMAL56)
-					y *= 6;
-				else
-					y *= scale1;
+				y *= scale1;
 
 				if (_videoMode.aspectRatioCorrection && !_overlayVisible)
 					y = real2Aspect(y);
@@ -2006,7 +1998,8 @@ void SurfaceSdlGraphicsManager::blitCursor() {
 		// If possible, use the same scaler for the cursor as for the rest of
 		// the game. This only works well with the non-blurring scalers so we
 		// actually only use the 1x, 2x and AdvMame scalers.
-		if (_videoMode.mode == GFX_DOUBLESIZE || _videoMode.mode == GFX_TRIPLESIZE)
+		debug("bbtest going to scale cursor");
+		if (_videoMode.mode == GFX_DOUBLESIZE || _videoMode.mode == GFX_TRIPLESIZE || _videoMode.mode == GFX_NORMAL56)
 			scalerProc = _scalerProc;
 		else
 			scalerProc = scalersMagn[_videoMode.scaleFactor - 1];
@@ -2050,6 +2043,7 @@ static int cursorStretch200To240(uint8 *buf, uint32 pitch, int width, int height
 #endif
 
 void SurfaceSdlGraphicsManager::undrawMouse() {
+	//debug("undrawMouse");
 	const int x = _mouseBackup.x;
 	const int y = _mouseBackup.y;
 
@@ -2108,10 +2102,7 @@ void SurfaceSdlGraphicsManager::drawMouse() {
 		dst.y = real2Aspect(dst.y);
 
 	dst.x = scale * dst.x - _mouseCurState.rHotX;
-	if(_videoMode.mode==GFX_NORMAL56)
-		dst.y = 6 * dst.y - _mouseCurState.rHotY;
-	else
-		dst.y = scale * dst.y - _mouseCurState.rHotY;
+	dst.y = scale * dst.y - _mouseCurState.rHotY;
 	dst.w = _mouseCurState.rW;
 	dst.h = _mouseCurState.rH;
 
@@ -2394,6 +2385,7 @@ void SurfaceSdlGraphicsManager::transformMouseCoordinates(Common::Point &point) 
 			point.y /= _videoMode.scaleFactor;
 		if (_videoMode.aspectRatioCorrection)
 			point.y = aspect2Real(point.y);
+		debug("bbtest transformMouseCoordinates %d %d", point.x, point.y);
 	}
 }
 
