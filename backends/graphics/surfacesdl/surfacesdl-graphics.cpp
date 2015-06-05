@@ -1087,7 +1087,7 @@ void SurfaceSdlGraphicsManager::internUpdateScreen() {
 		height = _videoMode.screenHeight;
 		scalerProc = _scalerProc;
 		scale1 = _videoMode.scaleFactor;
-		debug("!_overlayVisible, using _videoMode.scaleFactor");
+		//debug("!_overlayVisible, using _videoMode.scaleFactor");
 	} else {
 		origSurf = _overlayscreen;
 		srcSurf = _tmpscreen2;
@@ -1781,8 +1781,6 @@ void SurfaceSdlGraphicsManager::setMousePos(int x, int y) {
 
 void SurfaceSdlGraphicsManager::warpMouse(int x, int y) {
 
-	debug("bbtest warpMouse");
-
 	int y1 = y;
 
 	// Don't change actual mouse position, when mouse is outside of our window (in case of windowed mode)
@@ -1833,8 +1831,6 @@ void SurfaceSdlGraphicsManager::setMouseCursor(const void *buf, uint w, uint h, 
 	_mouseKeyColor = keycolor;
 
 	_cursorDontScale = dontScale;
-//	if(_videoMode.mode==GFX_NORMAL56)
-//		_cursorDontScale = true;
 
 	if (_mouseCurState.w != (int)w || _mouseCurState.h != (int)h) {
 		_mouseCurState.w = w;
@@ -2009,7 +2005,7 @@ void SurfaceSdlGraphicsManager::blitCursor() {
 		// If possible, use the same scaler for the cursor as for the rest of
 		// the game. This only works well with the non-blurring scalers so we
 		// actually only use the 1x, 2x and AdvMame scalers.
-		debug("bbtest going to scale cursor");
+		//debug("bbtest going to scale cursor");
 		if (_videoMode.mode == GFX_DOUBLESIZE || _videoMode.mode == GFX_TRIPLESIZE || _videoMode.mode == GFX_NORMAL56)
 			scalerProc = _scalerProc;
 		else
@@ -2399,7 +2395,7 @@ void SurfaceSdlGraphicsManager::transformMouseCoordinates(Common::Point &point) 
 			point.y /= _videoMode.scaleFactor;
 		if (_videoMode.aspectRatioCorrection)
 			point.y = aspect2Real(point.y);
-		debug("bbtest transformMouseCoordinates %d %d", point.x, point.y);
+		//debug("bbtest transformMouseCoordinates %d %d", point.x, point.y);
 	}
 }
 

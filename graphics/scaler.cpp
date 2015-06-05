@@ -256,6 +256,7 @@ void Normal3x(const uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPit
 
 /**
  * Trivial nearest-neighbor 5x6 scaler.
+ * inspired by http://www.gamasutra.com/blogs/FelipePepe/20150423/241730/No_MSDOS_games_werent_widescreen_Tips_on_correcting_aspect_ratio.php
  */
 void Normal5x6(const uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch,
 							int width, int height) {
