@@ -1087,6 +1087,7 @@ void SurfaceSdlGraphicsManager::internUpdateScreen() {
 		height = _videoMode.screenHeight;
 		scalerProc = _scalerProc;
 		scale1 = _videoMode.scaleFactor;
+		debug("!_overlayVisible, using _videoMode.scaleFactor");
 	} else {
 		origSurf = _overlayscreen;
 		srcSurf = _tmpscreen2;
@@ -1149,7 +1150,10 @@ void SurfaceSdlGraphicsManager::internUpdateScreen() {
 #ifdef USE_SCALERS
 				orig_dst_y = dst_y;
 #endif
-				dst_y = dst_y * scale1;
+				if (!_overlayVisible && _videoMode.mode == GFX_NORMAL56)
+					dst_y = dst_y * 6;
+				else
+					dst_y = dst_y * scale1;
 
 				if (_videoMode.aspectRatioCorrection && !_overlayVisible)
 					dst_y = real2Aspect(dst_y);
@@ -1163,6 +1167,8 @@ void SurfaceSdlGraphicsManager::internUpdateScreen() {
 			r->y = dst_y;
 			r->w = r->w * scale1;
 			r->h = dst_h * scale1;
+			if (!_overlayVisible && _videoMode.mode == GFX_NORMAL56)
+				r->h = dst_h * 6;
 
 #ifdef USE_SCALERS
 			if (_videoMode.aspectRatioCorrection && orig_dst_y < height && !_overlayVisible)
@@ -1192,6 +1198,7 @@ void SurfaceSdlGraphicsManager::internUpdateScreen() {
 		// Of course when the overlay is visible we do not show it, since it is only for game
 		// specific focus.
 		if (_enableFocusRect && !_overlayVisible) {
+			debug("bbtest _enableFocusRect && !_overlayVisible");
 			int y = _focusRect.top + _currentShakePos;
 			int h = 0;
 			int x = _focusRect.left * scale1;
@@ -1948,8 +1955,12 @@ void SurfaceSdlGraphicsManager::blitCursor() {
 	// Adapt the real hotspot according to the scale factor.
 	rW = w * cursorScale;
 	rH = h * cursorScale;
+	if(_videoMode.mode==GFX_NORMAL56)
+		rH = h * 6;
 	_mouseCurState.rHotX = _mouseCurState.hotX * cursorScale;
 	_mouseCurState.rHotY = _mouseCurState.hotY * cursorScale;
+	if(_videoMode.mode==GFX_NORMAL56)
+		_mouseCurState.rHotY = _mouseCurState.hotY * 6;
 
 	// The virtual dimensions will be the same as the original.
 
@@ -2102,7 +2113,10 @@ void SurfaceSdlGraphicsManager::drawMouse() {
 		dst.y = real2Aspect(dst.y);
 
 	dst.x = scale * dst.x - _mouseCurState.rHotX;
-	dst.y = scale * dst.y - _mouseCurState.rHotY;
+	if(!_overlayVisible && _videoMode.mode==GFX_NORMAL56)
+		dst.y = 6 * dst.y - _mouseCurState.rHotY;
+	else
+		dst.y = scale * dst.y - _mouseCurState.rHotY;
 	dst.w = _mouseCurState.rW;
 	dst.h = _mouseCurState.rH;
 

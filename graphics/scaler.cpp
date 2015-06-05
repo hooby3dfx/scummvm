@@ -260,7 +260,7 @@ void Normal3x(const uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPit
 void Normal5x6(const uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch,
 							int width, int height) {
 
-	debug("bbtest Normal5x6");
+	//debug("bbtest Normal5x6 %d %d", width, height);
 	uint8 *r;
 	const uint32 dstPitch2 = dstPitch * 2;
 	const uint32 dstPitch3 = dstPitch * 3;
@@ -313,6 +313,7 @@ void Normal5x6(const uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPi
 		srcPtr += srcPitch;
 		dstPtr += dstPitch6;
 	}
+	//debug("bbtest safe2");
 }
 
 #define interpolate_1_1		interpolate16_1_1<ColorMask>
