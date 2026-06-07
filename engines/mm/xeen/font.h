@@ -31,7 +31,9 @@ namespace Xeen {
 
 #define FONT_WIDTH 8
 #define FONT_HEIGHT 8
-#define DEFAULT_BG_COLOR 0x99
+// #define DEFAULT_BG_COLOR 0x99
+// #define DEFAULT_BG_COLOR_MM3 0xE9
+#define DEFAULT_BG_COLOR 0xE9
 
 enum Justify { JUSTIFY_NONE = 0, JUSTIFY_CENTER = 1, JUSTIFY_RIGHT = 2 };
 

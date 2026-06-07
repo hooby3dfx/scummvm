@@ -1052,7 +1052,7 @@ public:
 				"Enchanted Key to Tower of High Magic",
 				"Jeweled Amulet of the Northern Sphinx",
 				"Stone of a Thousand Terrors",
-				"Golem Stone of Admittance",
+				"Golem Stone of Admittance", // Item 88 - MM3 Quatloo Coin
 				"Yak Stone of Opening",
 				"Xeen's Scepter of Temporal Distortion",
 				"Alacorn of Falista",

@@ -107,6 +107,22 @@ static const MightAndMagicGameDescription GAME_DESCRIPTIONS[] = {
 	},
 
 	{
+		// Terra in Xeen (WIP TC)
+		{
+			"worldofxeen",
+			"mm3inX",
+			AD_ENTRY2s("xeen.cc", "9a0b24529efbdf3b5d52850a95cfdc05", 13435749,
+					   "dark.cc", "26adb43e265bc75745ab6b81c5096f76", 8838277),
+			Common::EN_ANY,
+			Common::kPlatformDOS,
+			ADGF_UNSTABLE,
+			GUIO_XEEN
+		},
+		GType_WorldOfXeen,
+		0
+	},
+
+	{
 		// World of Xeen (Bestseller Games Magazine #6 + #8 German)
 		{
 			"worldofxeen",

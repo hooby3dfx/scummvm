@@ -42,6 +42,7 @@ Debugger::Debugger(XeenEngine *vm) : GUI::Debugger(), _vm(vm),
 	registerCmd("strength", WRAP_METHOD(Debugger, cmdSuperStrength));
 	registerCmd("intangible", WRAP_METHOD(Debugger, cmdIntangible));
 	registerCmd("load", WRAP_METHOD(Debugger, cmdLoadOriginal));
+	registerCmd("inventory", WRAP_METHOD(Debugger, cmdInventory));
 }
 
 void Debugger::onFrame() {
@@ -143,6 +144,31 @@ bool Debugger::cmdGems(int argc, const char **argv) {
 		party._gems = strToInt(argv[1]);
 		if (argc > 2)
 			party._bankGems = strToInt(argv[2]);
+	}
+
+	return true;
+}
+
+bool Debugger::cmdInventory(int argc, const char **argv) {
+	Party &party = *_vm->_party;
+	if (argc == 1) {
+		debugPrintf("Party size: %d\n", party._activeParty.size());
+
+		for (uint charIdx = 0; charIdx < party._activeParty.size(); ++charIdx) {
+			Character &c = party._activeParty[charIdx];
+			for (uint itemIdx = 0; itemIdx < c._weapons.size(); itemIdx++) {
+				debugPrintf("Char %d Weapon item slot %d id: %d material: %d\n", charIdx, itemIdx, c._weapons[itemIdx]._id, c._weapons[itemIdx]._material);
+			}
+			for (uint itemIdx = 0; itemIdx < c._armor.size(); itemIdx++) {
+				debugPrintf("Char %d Armor item slot %d id: %d material: %d\n", charIdx, itemIdx, c._armor[itemIdx]._id, c._armor[itemIdx]._material);
+			}
+			for (uint itemIdx = 0; itemIdx < c._accessories.size(); itemIdx++) {
+				debugPrintf("Char %d Accessory item slot %d id: %d material: %d\n", charIdx, itemIdx, c._accessories[itemIdx]._id, c._accessories[itemIdx]._material);
+			}
+			for (uint itemIdx = 0; itemIdx < c._misc.size(); itemIdx++) {
+				debugPrintf("Char %d Misc item slot %d id: %d material: %d\n", charIdx, itemIdx, c._misc[itemIdx]._id, c._misc[itemIdx]._material);
+			}
+		}
 	}
 
 	return true;

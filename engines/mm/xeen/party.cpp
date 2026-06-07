@@ -1258,7 +1258,9 @@ bool Party::giveTake(int takeMode, uint takeVal, int giveMode, uint giveVal, int
 		} else {
 			for (idx = 0; idx < MAX_TREASURE_ITEMS && _treasure._misc[idx]._material; ++idx) {}
 			if (idx < MAX_TREASURE_ITEMS) {
-				_treasure._accessories[idx]._material = giveVal - ACCESSORIES_END;
+				// _treasure._accessories[idx]._material = giveVal - ACCESSORIES_END;
+				_treasure._misc[idx]._id = giveVal - ACCESSORIES_END;
+				_treasure._misc[idx]._material = giveVal - ACCESSORIES_END;
 				_treasure._hasItems = true;
 				return false;
 			}

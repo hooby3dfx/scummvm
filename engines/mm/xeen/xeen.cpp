@@ -256,7 +256,8 @@ bool XeenEngine::canSaveAutosaveCurrently() {
 }
 
 void XeenEngine::playGame() {
-	_files->setGameCc(0);
+	// _files->setGameCc(0);
+	_files->setGameCc(1);
 	_sound->stopAllAudio();
 	SpriteResource::setClippedBottom(140);
 
