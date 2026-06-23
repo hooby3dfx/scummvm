@@ -49,7 +49,7 @@ void ExchangeDialog::execute(Character *&c, int &charIndex) {
 		events.pollEventsAndWait();
 		checkEvents(_vm);
 
-		if (_buttonValue >= Common::KEYCODE_F1 && _buttonValue <= Common::KEYCODE_F6) {
+		if (_buttonValue >= Common::KEYCODE_F1 && _buttonValue <= Common::KEYCODE_F8) {
 			_buttonValue -= Common::KEYCODE_F1;
 			if (_buttonValue < (int)party._activeParty.size() && _buttonValue != charIndex) {
 				SWAP(party._activeParty[charIndex], party._activeParty[_buttonValue]);

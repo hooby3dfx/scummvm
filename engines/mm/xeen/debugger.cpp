@@ -174,6 +174,9 @@ bool Debugger::cmdInventory(int argc, const char **argv) {
 	return true;
 }
 
+//TODO quest bits, game bits, world bits
+
+
 bool Debugger::cmdMap(int argc, const char **argv) {
 	if (argc < 2) {
 		debugPrintf("map mapId [ xp, yp ] [ sideNum ]\n");

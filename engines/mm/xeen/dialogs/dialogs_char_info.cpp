@@ -126,7 +126,9 @@ void CharacterInfo::execute(int charIndex) {
 			Common::KEYCODE_F3 == _buttonValue ||
 			Common::KEYCODE_F4 == _buttonValue ||
 			Common::KEYCODE_F5 == _buttonValue ||
-			Common::KEYCODE_F6 == _buttonValue) {
+			Common::KEYCODE_F6 == _buttonValue ||
+			Common::KEYCODE_F7 == _buttonValue ||
+			Common::KEYCODE_F8 == _buttonValue) {
 			_buttonValue -= Common::KEYCODE_F1;
 			if (_buttonValue < (int)(oldMode == MODE_COMBAT ? combat._combatParty.size() : party._activeParty.size())) {
 				charIndex = _buttonValue;

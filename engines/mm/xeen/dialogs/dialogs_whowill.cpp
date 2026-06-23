@@ -89,7 +89,7 @@ int WhoWill::execute(int message, int action, bool type) {
 		if (_buttonValue == 27) {
 			_buttonValue = 0;
 			break;
-		} else if (_buttonValue >= Common::KEYCODE_F1 && _buttonValue <= Common::KEYCODE_F6) {
+		} else if (_buttonValue >= Common::KEYCODE_F1 && _buttonValue <= Common::KEYCODE_F8) {
 			_buttonValue -= Common::KEYCODE_F1 - 1;
 			if (_buttonValue > (int)party._activeParty.size())
 				continue;

@@ -146,7 +146,9 @@ void PartyDialog::execute() {
 				Common::KEYCODE_F3 == _buttonValue ||
 				Common::KEYCODE_F4 == _buttonValue ||
 				Common::KEYCODE_F5 == _buttonValue ||
-				Common::KEYCODE_F6 == _buttonValue) {
+				Common::KEYCODE_F6 == _buttonValue ||
+				Common::KEYCODE_F7 == _buttonValue ||
+				Common::KEYCODE_F8 == _buttonValue) {
 				// Show character info
 				_buttonValue -= Common::KEYCODE_F1;
 				if (_buttonValue < (int)party._activeParty.size())
@@ -465,6 +467,8 @@ int PartyDialog::selectCharacter(bool isDelete, int firstDisplayChar) {
 		case Common::KEYCODE_F4:
 		case Common::KEYCODE_F5:
 		case Common::KEYCODE_F6:
+		case Common::KEYCODE_F7:
+		case Common::KEYCODE_F8:
 			if (!isDelete) {
 				v = _buttonValue - Common::KEYCODE_F1;
 				if (v < (int)party._activeParty.size())

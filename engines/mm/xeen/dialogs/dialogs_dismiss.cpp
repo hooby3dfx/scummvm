@@ -63,7 +63,7 @@ void Dismiss::execute() {
 			} while (!_vm->shouldExit() && !_buttonValue && events.timeElapsed() < 2);
 		} while (!_vm->shouldExit() && !_buttonValue);
 
-		if (_buttonValue >= Common::KEYCODE_F1 && _buttonValue <= Common::KEYCODE_F6) {
+		if (_buttonValue >= Common::KEYCODE_F1 && _buttonValue <= Common::KEYCODE_F8) {
 			_buttonValue -= Common::KEYCODE_F1;
 
 			if (_buttonValue < (int)party._activeParty.size()) {

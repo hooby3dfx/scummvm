@@ -92,7 +92,9 @@ void QuickFight::execute() {
 			Common::KEYCODE_F3 == _buttonValue || 
 			Common::KEYCODE_F4 == _buttonValue || 
 			Common::KEYCODE_F5 == _buttonValue || 
-			Common::KEYCODE_F6 == _buttonValue) {
+			Common::KEYCODE_F6 == _buttonValue || 
+			Common::KEYCODE_F7 == _buttonValue || 
+			Common::KEYCODE_F8 == _buttonValue) {
 			int charIdx = _buttonValue - Common::KEYCODE_F1;
 			if (charIdx < (int)combat._combatParty.size()) {
 				// Highlight new character

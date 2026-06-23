@@ -274,6 +274,7 @@ const int LangConstants::FACE_CONDITION_FRAMES[17] = {
 };
 
 const int LangConstants::CHAR_FACES_X[6] = {10, 45, 81, 117, 153, 189};
+//TODO 8 entries
 
 const int LangConstants::HP_BARS_X[6] = {13, 50, 86, 122, 158, 194};
 

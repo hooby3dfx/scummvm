@@ -597,7 +597,7 @@ Character *BlacksmithLocation::doOptions(Character *c) {
 	Interface &intf = *g_vm->_interface;
 	Party &party = *g_vm->_party;
 
-	if (_buttonValue >= Common::KEYCODE_F1 && _buttonValue <= Common::KEYCODE_F6) {
+	if (_buttonValue >= Common::KEYCODE_F1 && _buttonValue <= Common::KEYCODE_F8) {
 		// Switch character
 		_buttonValue -= Common::KEYCODE_F1;
 		if (_buttonValue < (int)party._activeParty.size()) {
@@ -675,7 +675,7 @@ Character *GuildLocation::doOptions(Character *c) {
 	Party &party = *g_vm->_party;
 	Sound &sound = *g_vm->_sound;
 
-	if (_buttonValue >= Common::KEYCODE_F1 && _buttonValue <= Common::KEYCODE_F6) {
+	if (_buttonValue >= Common::KEYCODE_F1 && _buttonValue <= Common::KEYCODE_F8) {
 		// Switch character
 		_buttonValue -= Common::KEYCODE_F1;
 		if (_buttonValue < (int)party._activeParty.size()) {
@@ -780,7 +780,9 @@ Character *TavernLocation::doOptions(Character *c) {
 		Common::KEYCODE_F3 == _buttonValue ||
 		Common::KEYCODE_F4 == _buttonValue ||
 		Common::KEYCODE_F5 == _buttonValue ||
-		Common::KEYCODE_F6 == _buttonValue) {
+		Common::KEYCODE_F6 == _buttonValue ||
+		Common::KEYCODE_F7 == _buttonValue ||
+		Common::KEYCODE_F8 == _buttonValue) {
 		// Switch character
 		_buttonValue -= Common::KEYCODE_F1;
 		if (_buttonValue < (int)party._activeParty.size()) {
@@ -1194,7 +1196,9 @@ Character *TempleLocation::doOptions(Character *c) {
 		Common::KEYCODE_F3 == _buttonValue ||
 		Common::KEYCODE_F4 == _buttonValue ||
 		Common::KEYCODE_F5 == _buttonValue ||
-		Common::KEYCODE_F6 == _buttonValue) {
+		Common::KEYCODE_F6 == _buttonValue ||
+		Common::KEYCODE_F7 == _buttonValue ||
+		Common::KEYCODE_F8 == _buttonValue) {
 		// Switch character
 		_buttonValue -= Common::KEYCODE_F1;
 		if (_buttonValue < (int)party._activeParty.size()) {
@@ -1374,7 +1378,9 @@ Character *TrainingLocation::doOptions(Character *c) {
 		Common::KEYCODE_F3 == _buttonValue ||
 		Common::KEYCODE_F4 == _buttonValue ||
 		Common::KEYCODE_F5 == _buttonValue ||
-		Common::KEYCODE_F6 == _buttonValue) {
+		Common::KEYCODE_F6 == _buttonValue ||
+		Common::KEYCODE_F7 == _buttonValue ||
+		Common::KEYCODE_F8 == _buttonValue) {
 		// Switch character
 		_buttonValue -= Common::KEYCODE_F1;
 		if (_buttonValue < (int)party._activeParty.size()) {

@@ -400,7 +400,9 @@ Character *ItemsDialog::execute(Character *c, ItemsMode mode) {
 			Common::KEYCODE_F3 == _buttonValue ||
 			Common::KEYCODE_F4 == _buttonValue ||
 			Common::KEYCODE_F5 == _buttonValue ||
-			Common::KEYCODE_F6 == _buttonValue) {
+			Common::KEYCODE_F6 == _buttonValue ||
+			Common::KEYCODE_F7 == _buttonValue ||
+			Common::KEYCODE_F8 == _buttonValue) {
 			if (!varA && mode != ITEMMODE_3 && mode != ITEMMODE_ENCHANT && mode != ITEMMODE_RECHARGE && mode != ITEMMODE_TO_GOLD && party._mazeId != 0) {
 				_buttonValue -= Common::KEYCODE_F1;
 

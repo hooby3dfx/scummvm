@@ -222,6 +222,8 @@ Character *SpellsDialog::execute(ButtonContainer *priorDialog, Character *c, int
 		case Common::KEYCODE_F4:
 		case Common::KEYCODE_F5:
 		case Common::KEYCODE_F6:
+		case Common::KEYCODE_F7:
+		case Common::KEYCODE_F8:
 			if (_vm->_mode != MODE_COMBAT) {
 				_buttonValue -= Common::KEYCODE_F1;
 				if (_buttonValue < (int)party._activeParty.size()) {
@@ -682,7 +684,9 @@ int CastSpell::execute(Character *&c) {
 			Common::KEYCODE_F3 == _buttonValue ||
 			Common::KEYCODE_F4 == _buttonValue ||
 			Common::KEYCODE_F5 == _buttonValue ||
-			Common::KEYCODE_F6 == _buttonValue) {
+			Common::KEYCODE_F6 == _buttonValue ||
+			Common::KEYCODE_F7 == _buttonValue ||
+			Common::KEYCODE_F8 == _buttonValue) {
 			// Only allow changing character if the party is not in combat
 			if (_oldMode != MODE_COMBAT) {
 				_vm->_mode = (Mode)_oldMode;
@@ -796,6 +800,8 @@ int SpellOnWho::execute(int spellId) {
 		case Common::KEYCODE_F4:
 		case Common::KEYCODE_F5:
 		case Common::KEYCODE_F6:
+		case Common::KEYCODE_F7:
+		case Common::KEYCODE_F8:
 			_buttonValue -= Common::KEYCODE_F1;
 			if (_buttonValue < (int)(combat._combatMode == 2 ? combat._combatParty.size() :
 					party._activeParty.size())) {
