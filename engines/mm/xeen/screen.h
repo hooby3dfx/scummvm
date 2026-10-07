@@ -75,6 +75,11 @@ public:
 	void loadPalette(const Common::Path &name);
 
 	/**
+	 * Apply the loaded temporary palette as the main palette
+	 */
+	void applyPalette();
+
+	/**
 	 * Load a background resource into memory
 	 */
 	void loadBackground(const Common::Path &name);

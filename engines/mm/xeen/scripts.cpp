@@ -1891,6 +1891,7 @@ bool Scripts::ifProc(int action, uint32 val, int mode, int charIndex) {
 		break;
 	case 104:
 		// Get value of quest flag
+		//FIXME
 		v = party._questFlags[(_vm->getGameID() == GType_Swords ? 0 : files._ccNum * 30) + val] ? val : 0xffffffff;
 		break;
 	case 105:

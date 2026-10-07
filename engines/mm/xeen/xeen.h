@@ -202,7 +202,7 @@ public:
 #endif
 
 	CCArchive *_xeenCc = nullptr, *_darkCc = nullptr,
-		*_introCc = nullptr;
+		*_introCc = nullptr; //, *_terraCc = nullptr;
 	SaveArchive *_xeenSave = nullptr, *_darkSave = nullptr;
 	BaseCCArchive *_currentArchive = nullptr;
 	SaveArchive *_currentSave = nullptr;

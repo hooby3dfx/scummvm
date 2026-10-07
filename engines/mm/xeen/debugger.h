@@ -91,6 +91,7 @@ private:
 	bool cmdLoadOriginal(int argc, const char **argv);
 
 	bool cmdInventory(int argc, const char **argv);
+	bool cmdPlaySong(int argc, const char **argv);
 
 public:
 	bool _invincible;

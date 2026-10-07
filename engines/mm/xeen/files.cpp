@@ -34,8 +34,8 @@ namespace Xeen {
 
 FileManager::FileManager(XeenEngine *vm) {
 	_ccNum = vm->getGameID() == GType_DarkSide;
-	_xeenCc = _darkCc = _introCc = nullptr;
-	_xeenSave = _darkSave = nullptr;
+	_xeenCc = _darkCc = _introCc = _terraCc = nullptr;
+	_xeenSave = _darkSave = _terraSave = nullptr;
 	_currentSave = nullptr;
 	_currentArchive = nullptr;
 }
@@ -56,6 +56,10 @@ bool FileManager::setup() {
 			new CCArchive("xeen.cc", "xeen", true);
 		_darkCc = (g_vm->getGameID() == GType_Clouds) ? nullptr :
 			new CCArchive("dark.cc", "dark", true);
+
+		if (Common::File::exists("terra.cc")) {
+			_terraCc = new CCArchive("terra.cc", "terra", true);
+		}
 	}
 
 	if (Common::File::exists("intro.cc")) {
@@ -85,6 +89,9 @@ void FileManager::setGameCc(int ccMode) {
 
 	File::setCurrentArchive(ccMode);
 	_ccNum = ccMode != 0;
+	if (ccMode > 2) {
+		_ccNum = ccMode;
+	}
 }
 
 void FileManager::load(Common::SeekableReadStream &stream) {
@@ -92,7 +99,8 @@ void FileManager::load(Common::SeekableReadStream &stream) {
 }
 
 void FileManager::save(Common::WriteStream &s) {
-	s.writeByte(_ccNum ? 1 : 0);
+	// s.writeByte(_ccNum ? 1 : 0);
+	s.writeByte(_ccNum);
 }
 
 /*------------------------------------------------------------------------*/

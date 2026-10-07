@@ -109,6 +109,7 @@ bool XeenEngine::initialize() {
 	_interface = new Interface(this);
 	_locations = new LocationManager();
 	_map = new Map(this);
+	// _files->setGameCc(3);
 	_party = new Party(this);
 	_patcher = new Patcher();
 	_saves = new SavesManager(_targetName);
@@ -258,6 +259,9 @@ bool XeenEngine::canSaveAutosaveCurrently() {
 void XeenEngine::playGame() {
 	_files->setGameCc(0);
 	// _files->setGameCc(1);
+	//TODO: proper support for changing the game cc at runtime, including party sprites and palette, etc.
+	// _files->setGameCc(3);
+
 	_sound->stopAllAudio();
 	SpriteResource::setClippedBottom(140);
 
@@ -317,6 +321,10 @@ void XeenEngine::play() {
 void XeenEngine::gameLoop() {
 	// Main game loop
 	while (isLoadPending() || !shouldExit()) {
+
+		_screen->loadPalette("mm4.pal");
+		_screen->applyPalette();
+
 		if (isLoadPending()) {
 			// Load any pending savegame
 			int saveSlot = _loadSaveSlot;

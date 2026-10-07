@@ -86,7 +86,7 @@ enum TrainingButtonTTSTextIndex {
 };
 
 BaseLocation::BaseLocation(LocationAction action) : ButtonContainer(g_vm),
-		_locationActionId(action), _ccNum(g_vm->_files->_ccNum),
+		_locationActionId(action), _ccNum((g_vm->_files->_ccNum > Res.DARK_CC) ? Res.DARK_CC : g_vm->_files->_ccNum),
 		_vocName("hello1.voc"), _exitToUi(false) {
 	_townMaxId = (action >= SPHINX) ? 0 : Res.TOWN_MAXES[_ccNum][action];
 	if (action < NO_ACTION) {

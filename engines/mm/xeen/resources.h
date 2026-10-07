@@ -127,6 +127,9 @@ public:
 	Common::StringArray _cloudsMapNames;	// Clouds of Xeen map names
 	const char **ITEM_NAMES[4];
 
+	const int XEEN_CC = 0;
+	const int DARK_CC = 1;
+
 	// Data loaded from the engine data
 	const char *CLOUDS_CREDITS;
 	const char *DARK_SIDE_CREDITS;

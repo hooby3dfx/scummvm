@@ -100,6 +100,7 @@ int SoundDriverAdlib::songCommand(uint commandId, byte musicVolume, byte sfxVolu
 		if (_streams[stMUSIC]._playing) {
 			_field180 = commandId;
 			_field182 = 63;
+			debugC(9, kDebugSound, "set _field180 %.2x \n", _field180);
 		}
 	} else if (commandId == SET_VOLUME) {
 		_musicVolume = musicVolume;
@@ -301,6 +302,9 @@ bool SoundDriverAdlib::musSetVolume(const byte *&srcP, byte param) {
 	if (*srcP++ == 5 && !_field180) {
 		_channels[param]._volume = *srcP;
 		setOutputLevel(param, *srcP);
+		debugC(9, kDebugSound, "musSetVolume (OPL) set! volume level: %d", *srcP);
+	} else {
+		debugC(9, kDebugSound, "musSetVolume (OPL) skipped! _field180: %.2x", _field180);
 	}
 
 	++srcP;

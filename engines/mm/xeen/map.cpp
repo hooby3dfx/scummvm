@@ -699,7 +699,7 @@ void Map::load(int mapId) {
 		_animationInfo.load("animinfo.cld");
 		_monsterData.load("monsters.cld");
 		_wallPicSprites.load("wallpics.cld");
-	} else if (_vm->getGameID() == GType_WorldOfXeen) {
+	} else if (_vm->getGameID() == GType_WorldOfXeen && _loadCcNum < 3) {
 		files.setGameCc(1);
 
 		if (!_loadCcNum) {
@@ -750,7 +750,19 @@ void Map::load(int mapId) {
 		}
 
 		files.setGameCc(_loadCcNum);
+	} else if (_vm->getGameID() == GType_WorldOfXeen && _loadCcNum > 2) {
+		files.setGameCc(_loadCcNum);
+		_animationInfo.load("dark.dat");
+		_monsterData.load("dark.mon");
+		_wallPicSprites.load("darkpic.dat");
+		_sideObjects = _loadCcNum;
+		_sideMonsters = _loadCcNum;
+		_sidePictures = _loadCcNum;
 	}
+
+	//TODO set palette and reload party sprites on CC change
+	party._roster.reload();
+	intf.drawParty(true);
 
 	// Load any events for the new map
 	loadEvents(mapId, _loadCcNum);
@@ -1467,7 +1479,8 @@ Common::String Map::getMazeName(int mapId, int ccNum) {
 	} else {
 		Common::Path txtName(Common::String::format("%s%c%03d.txt",
 			ccNum ? "dark" : "xeen", mapId >= 100 ? 'x' : '0', mapId));
-		File fText(txtName, 1);
+		// File fText(txtName, 1);
+		File fText(txtName, (ccNum < Res.DARK_CC) ? Res.DARK_CC : ccNum);
 		char mazeName[33];
 		fText.read(mazeName, 33);
 		mazeName[32] = '\0';

@@ -39,12 +39,14 @@ _wonWorld(false), _wonDarkSide(false) {
 	FileManager &files = *g_vm->_files;
 	files._xeenSave = nullptr;
 	files._darkSave = nullptr;
+	files._terraSave = nullptr;
 }
 
 SavesManager::~SavesManager() {
 	FileManager &files = *g_vm->_files;
 	delete files._xeenSave;
 	delete files._darkSave;
+	delete files._terraSave;
 }
 
 static const char *const SAVEGAME_STR = "XEEN";
@@ -133,8 +135,8 @@ Common::Error SavesManager::saveGameState(int slot, const Common::String &desc, 
 	writeSavegameHeader(out, header);
 
 	// Loop through saving the sides' save archives
-	SaveArchive *archives[2] = { files._xeenSave, files._darkSave };
-	for (int idx = 0; idx < 2; ++idx) {
+	SaveArchive *archives[3] = { files._xeenSave, files._darkSave, files._terraSave };
+	for (int idx = 0; idx < 3; ++idx) {
 		if (archives[idx]) {
 			archives[idx]->save(*out);
 		} else {
@@ -144,6 +146,7 @@ Common::Error SavesManager::saveGameState(int slot, const Common::String &desc, 
 	}
 
 	// Write out miscellaneous
+	// (one byte for the current cc num)
 	files.save(*out);
 
 	out->finalize();
@@ -173,8 +176,8 @@ Common::Error SavesManager::loadGameState(int slot) {
 	events.setPlayTime(header._totalFrames);
 
 	// Loop through loading the sides' save archives
-	SaveArchive *archives[2] = { files._xeenSave, files._darkSave };
-	for (int idx = 0; idx < 2; ++idx) {
+	SaveArchive *archives[3] = { files._xeenSave, files._darkSave, files._terraSave };
+	for (int idx = 0; idx < 3; ++idx) {
 		uint fileSize = saveFile->readUint32LE();
 
 		if (archives[idx]) {
@@ -215,6 +218,7 @@ void SavesManager::newGame() {
 	delete files._darkSave;
 	files._xeenSave = nullptr;
 	files._darkSave = nullptr;
+	files._terraSave = nullptr;
 
 	// Reset any combat information from the previous game
 	g_vm->_combat->reset();
@@ -223,6 +227,9 @@ void SavesManager::newGame() {
 	if (g_vm->getGameID() != GType_Clouds) {
 		files._darkSave = new SaveArchive(g_vm->_party);
 		files._darkSave->reset(files._darkCc);
+
+		files._terraSave = new SaveArchive(g_vm->_party);
+		files._terraSave->reset(files._terraCc);
 	}
 	if (g_vm->getGameID() != GType_DarkSide && g_vm->getGameID() != GType_Swords) {
 		files._xeenSave = new SaveArchive(g_vm->_party);

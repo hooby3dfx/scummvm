@@ -115,6 +115,11 @@ void File::setCurrentArchive(int ccMode) {
 		fm._currentSave = nullptr;
 		break;
 
+	case 3:
+		fm._currentArchive = fm._terraCc;
+		fm._currentSave = fm._terraSave;
+		break;
+
 	default:
 		break;
 	}

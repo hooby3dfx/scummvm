@@ -51,8 +51,8 @@ enum PartyBank {
 
 #define TOTAL_CHARACTERS 30
 #define XEEN_TOTAL_CHARACTERS 24
-#define MAX_ACTIVE_PARTY 6
-// #define MAX_ACTIVE_PARTY 8
+// #define MAX_ACTIVE_PARTY 6
+#define MAX_ACTIVE_PARTY 8
 #define MAX_PARTY_COUNT 8
 #define TOTAL_STATS 7
 #define TOTAL_QUEST_ITEMS 85
@@ -66,6 +66,7 @@ public:
 public:
 	Roster();
 
+	void reload();
 	void synchronize(Common::Serializer &s);
 };
 

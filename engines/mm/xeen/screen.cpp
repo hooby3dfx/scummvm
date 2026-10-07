@@ -144,6 +144,16 @@ void Screen::fadeInner(int step) {
 	update();
 }
 
+void Screen::applyPalette() {
+	// Create a scaled palette from the temporary one
+	for (int i = 0; i < PALETTE_SIZE; ++i) {
+		// _mainPalette[i] = (_tempPalette[i] * val * 2) >> 8;
+		_mainPalette[i] = (_tempPalette[i]);
+	}
+
+	updatePalette();
+}
+
 void Screen::updatePalette() {
 	updatePalette(_mainPalette, 0, 16);
 }

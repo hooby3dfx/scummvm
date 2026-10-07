@@ -53,6 +53,22 @@ Roster::Roster() {
 	}
 }
 
+void Roster::reload() {
+	for (int idx = 0; idx < TOTAL_CHARACTERS; ++idx) {
+		// Set the index of the character in the roster list
+		operator[](idx)._rosterId = idx;
+
+		if (idx < XEEN_TOTAL_CHARACTERS) {
+			// Load new character resource
+			Common::Path name(Common::String::format("char%02d.fac", idx + 1));
+			_charFaces[idx].load(name);
+			operator[](idx)._faceSprites = &_charFaces[idx];
+		} else {
+			operator[](idx)._faceSprites = nullptr;
+		}
+	}
+}
+
 void Roster::synchronize(Common::Serializer &s) {
 	Party &party = *g_vm->_party;
 
@@ -1140,6 +1156,7 @@ bool Party::giveTake(int takeMode, uint takeVal, int giveMode, uint giveVal, int
 		_worldFlags[takeVal] = false;
 		break;
 	case 104:
+		//FIXME
 		_questFlags[(_vm->getGameID() == GType_Swords ? 0 : files._ccNum * 30) + takeVal] = false;
 		break;
 	case 107:
@@ -1223,6 +1240,7 @@ bool Party::giveTake(int takeMode, uint takeVal, int giveMode, uint giveVal, int
 	case 20:
 		assert(giveVal < 256);
 		_gameFlags[_vm->getGameID() == GType_Swords ? 0 : files._ccNum][giveVal] = true;
+		//TODO quest conversion for mm3
 		break;
 	case 21: {
 		const uint WEAPONS_END = _vm->getGameID() != GType_Swords ? 35 : 41;
@@ -1479,6 +1497,7 @@ bool Party::giveTake(int takeMode, uint takeVal, int giveMode, uint giveVal, int
 		break;
 	case 104:
 		assert(giveVal < (uint)(_vm->getGameID() == GType_Swords ? 60 : 30));
+		//FIXME
 		_questFlags[(_vm->getGameID() == GType_Swords ? 0 : files._ccNum * 30) + giveVal] = true;
 		break;
 	case 107:

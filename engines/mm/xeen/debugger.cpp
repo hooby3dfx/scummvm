@@ -43,6 +43,7 @@ Debugger::Debugger(XeenEngine *vm) : GUI::Debugger(), _vm(vm),
 	registerCmd("intangible", WRAP_METHOD(Debugger, cmdIntangible));
 	registerCmd("load", WRAP_METHOD(Debugger, cmdLoadOriginal));
 	registerCmd("inventory", WRAP_METHOD(Debugger, cmdInventory));
+	registerCmd("song", WRAP_METHOD(Debugger, cmdPlaySong));
 }
 
 void Debugger::onFrame() {
@@ -175,6 +176,17 @@ bool Debugger::cmdInventory(int argc, const char **argv) {
 }
 
 //TODO quest bits, game bits, world bits
+
+bool Debugger::cmdPlaySong(int argc, const char **argv) {
+	if (argc < 2) {
+		debugPrintf("song songname.m\n");
+		return true;
+	} else {
+		Sound &sound = *g_vm->_sound;
+		sound.playSong(argv[1]);
+		return false;
+	}
+}
 
 
 bool Debugger::cmdMap(int argc, const char **argv) {
