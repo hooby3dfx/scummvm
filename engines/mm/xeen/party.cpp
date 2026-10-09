@@ -922,6 +922,8 @@ bool Party::giveTake(int takeMode, uint takeVal, int giveMode, uint giveVal, int
 		giveMode = 0;
 	}
 
+	int woxflagside = (files._ccNum > 1) ? 1 : files._ccNum;
+
 	switch (takeMode) {
 	case 8:
 		combat.giveCharDamage(takeVal, scripts._nEdamageType, charIdx);
@@ -972,7 +974,7 @@ bool Party::giveTake(int takeMode, uint takeVal, int giveMode, uint giveVal, int
 	}
 	case 20:
 		assert(takeVal < 256);
-		_gameFlags[_vm->getGameID() == GType_Swords ? 0 : files._ccNum][takeVal] = false;
+		_gameFlags[_vm->getGameID() == GType_Swords ? 0 : woxflagside][takeVal] = false;
 		break;
 	case 21: {
 		const uint WEAPONS_END = _vm->getGameID() != GType_Swords ? 35 : 41;
@@ -1156,8 +1158,7 @@ bool Party::giveTake(int takeMode, uint takeVal, int giveMode, uint giveVal, int
 		_worldFlags[takeVal] = false;
 		break;
 	case 104:
-		//FIXME
-		_questFlags[(_vm->getGameID() == GType_Swords ? 0 : files._ccNum * 30) + takeVal] = false;
+		_questFlags[(_vm->getGameID() == GType_Swords ? 0 : woxflagside * 30) + takeVal] = false;
 		break;
 	case 107:
 		_characterFlags[ps._rosterId][takeVal] = false;
@@ -1239,8 +1240,7 @@ bool Party::giveTake(int takeMode, uint takeVal, int giveMode, uint giveVal, int
 	}
 	case 20:
 		assert(giveVal < 256);
-		_gameFlags[_vm->getGameID() == GType_Swords ? 0 : files._ccNum][giveVal] = true;
-		//TODO quest conversion for mm3
+		_gameFlags[_vm->getGameID() == GType_Swords ? 0 : woxflagside][giveVal] = true;
 		break;
 	case 21: {
 		const uint WEAPONS_END = _vm->getGameID() != GType_Swords ? 35 : 41;
@@ -1497,8 +1497,7 @@ bool Party::giveTake(int takeMode, uint takeVal, int giveMode, uint giveVal, int
 		break;
 	case 104:
 		assert(giveVal < (uint)(_vm->getGameID() == GType_Swords ? 60 : 30));
-		//FIXME
-		_questFlags[(_vm->getGameID() == GType_Swords ? 0 : files._ccNum * 30) + giveVal] = true;
+		_questFlags[(_vm->getGameID() == GType_Swords ? 0 : woxflagside * 30) + giveVal] = true;
 		break;
 	case 107:
 		assert(giveVal < 32);

@@ -92,6 +92,7 @@ private:
 
 	bool cmdInventory(int argc, const char **argv);
 	bool cmdPlaySong(int argc, const char **argv);
+	bool cmdFlags(int argc, const char **argv);
 
 public:
 	bool _invincible;

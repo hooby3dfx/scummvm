@@ -131,6 +131,8 @@ void Quests::execute() {
 				}
 			}
 
+			//TODO mm3 handling?
+
 			ttsMessage.clear();
 			if (count == 0) {
 				windows[30].writeString(Res.NO_QUEST_ITEMS);
@@ -166,6 +168,16 @@ void Quests::execute() {
 					}
 
 					lines[count++] = _questNotes[idx];
+				}
+			}
+
+			if (_vm->_files->_ccNum == 3) {
+				// remap game bits to quest status for mm3
+				if (party._gameFlags[1][170]) {
+					lines[count++] = _questNotes[14];
+				}
+				if (party._gameFlags[1][4]) {
+					lines[count++] = _questNotes[15];
 				}
 			}
 
@@ -217,9 +229,53 @@ void Quests::execute() {
 				}
 			}
 
+			if (_vm->_files->_ccNum == 3 && party._mazeId < 65) {
+				// repurpose the auto notes with coraks notes for mm3
+				int corak_id = party._mazeId;
+				switch (corak_id) {
+				case 29:
+					corak_id = 1;
+					break;
+				case 129:
+					corak_id = 29;
+					break;
+				case 31:
+					corak_id = 2;
+					break;
+				case 131:
+					corak_id = 31;
+					break;
+				case 33:
+					corak_id = 3;
+					break;
+				case 133:
+					corak_id = 33;
+					break;
+				case 35:
+					corak_id = 4;
+					break;
+				case 135:
+					corak_id = 35;
+					break;
+				case 37:
+					corak_id = 5;
+					break;
+				case 137:
+					corak_id = 37;
+					break;
+				default:
+					break;
+				}
+				corak_id = corak_id - 1;
+
+				lines[count++] = _questNotes[corak_id + offset];
+			}
+
 			if (count == 0)
 				lines[1] = Res.NO_AUTO_NOTES;
 
+			// const char* CORAKS_NOTES = "Corak's Notes";
+			// const char* auto_notes_title = (_vm->_files->_ccNum == 3) ? CORAKS_NOTES : Res.AUTO_NOTES_DATA;
 			windows[30].writeString(Common::String::format(Res.AUTO_NOTES_DATA,
 				lines[topRow].c_str(), lines[topRow + 1].c_str(),
 				lines[topRow + 2].c_str(), lines[topRow + 3].c_str(),
@@ -298,7 +354,7 @@ void Quests::addButtons() {
 }
 
 void Quests::loadQuestNotes() {
-	File f("qnotes.bin", 1);
+	File f("qnotes.bin", (_vm->_files->_ccNum > 1) ? _vm->_files->_ccNum : 1);
 	while (f.pos() < f.size())
 		_questNotes.push_back(f.readString());
 	f.close();

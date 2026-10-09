@@ -414,8 +414,9 @@ void MonsterObjectData::synchronize(XeenSerializer &s, MonsterData &monsterData)
 	for (uint i = 0; i < 16; ++i) {
 		b = (i >= _monsterSprites.size()) ? 0xff : _monsterSprites[i]._spriteId;
 		s.syncAsByte(b);
-		if (s.isLoading() && b != 0xff)
+		if (s.isLoading() && b != 0xff) {
 			_monsterSprites.push_back(SpriteResourceEntry(b));
+		}
 	}
 	for (uint i = 0; i < 16; ++i) {
 		b = (i >= _wallItemSprites.size()) ? 0xff : _wallItemSprites[i]._spriteId;

@@ -44,6 +44,7 @@ Debugger::Debugger(XeenEngine *vm) : GUI::Debugger(), _vm(vm),
 	registerCmd("load", WRAP_METHOD(Debugger, cmdLoadOriginal));
 	registerCmd("inventory", WRAP_METHOD(Debugger, cmdInventory));
 	registerCmd("song", WRAP_METHOD(Debugger, cmdPlaySong));
+	registerCmd("flags", WRAP_METHOD(Debugger, cmdFlags));
 }
 
 void Debugger::onFrame() {
@@ -175,7 +176,22 @@ bool Debugger::cmdInventory(int argc, const char **argv) {
 	return true;
 }
 
-//TODO quest bits, game bits, world bits
+bool Debugger::cmdFlags(int argc, const char **argv) {
+	Party &party = *_vm->_party;
+	if (argc == 1) {
+		// party._gameFlags[2][256];
+		// party._worldFlags[129];
+		// party._questFlags[60];
+		for (int idx = 0; idx < 256; idx++) {
+			debugPrintf("Gameflag (Clouds) %d: %d\n", idx, party._gameFlags[0][idx]);
+		}
+		for (int idx = 0; idx < 256; idx++) {
+			debugPrintf("Gameflag (Darkside) %d: %d\n", idx, party._gameFlags[1][idx]);
+		}
+	}
+
+	return true;
+}
 
 bool Debugger::cmdPlaySong(int argc, const char **argv) {
 	if (argc < 2) {
