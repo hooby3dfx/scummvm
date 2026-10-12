@@ -998,9 +998,15 @@ public:
 
 	const char **MISC_NAMES() {
 		static const char *_miscNames[] = {
-			nullptr, "rod ", "jewel ", "gem ", "box ", "orb ", "horn ", "coin ",
-				"wand ", "whistle ", "potion ", "scroll ", "bogus", "bogus", "bogus",
-				"bogus", "bogus", "bogus", "bogus", "bogus", "bogus", "bogus"
+			//1-11 used in xeen games
+			nullptr, "rod ", "jewel ", "gem ", "box ", "orb ", "horn ", "coin ", "wand ", "whistle ", "potion ", "scroll ", 
+			//12+ used in mm3
+				"Torch", "Rope and Hooks", "Useless Item", "Ancient Jewelry", "bogus1", 
+				"Green Eyeball Key", "Red Warriors Key", "Sacred Silver Skull", "Ancient Artifact of Good", "Ancient Artifact of Neutrality",
+				"Ancient Artifact of Evil", "Precious Pearl of Youth and Beauty", "Black Terror Key", "King's Ultimate Power Orb", "Ancient Fizbin of Misfortune",
+				"Gold Master Key", "Quatloo Coin", "Hologram Sequencing Card 001", "Yellow Fortress Key", "Blue Unholy Key",
+				"Hologram Sequencing Card 002", "Hologram Sequencing Card 003", "Hologram Sequencing Card 004", "Hologram Sequencing Card 005", "Hologram Sequencing Card 006",
+				"Z Item 23", "Blue Priority Pass Card", "Interspacial Transport Box", "Might Potion", "Golden Pyramid Key Card", "Alacorn of Icarus", "Sea Shell of Serenity"
 		};
 		return _miscNames;
 	}

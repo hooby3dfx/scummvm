@@ -1564,6 +1564,7 @@ void Combat::attack2(int damage, RangeType rangeType) {
 						break;
 					case CATEGORY_MISC:
 						for (int idx = 0; idx < MAX_TREASURE_ITEMS; ++idx) {
+							//FIXME this looks like a bug
 							if (party._treasure._accessories[idx].empty()) {
 								party._treasure._accessories[idx] = tempChar._accessories[0];
 								party._treasure._hasItems = true;

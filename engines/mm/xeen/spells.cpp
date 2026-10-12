@@ -1212,9 +1212,10 @@ void Spells::townPortal() {
 
 	sound.playFX(51);
 	map._loadCcNum = map._sideTownPortal;
-	_vm->_files->_ccNum = map._sideTownPortal > 0;
+	_vm->_files->_ccNum = map._sideTownPortal;
 
-	int arrIndex = _vm->getGameID() == GType_Swords ? 2 : map._sideTownPortal;
+	int sideTownPortalForLookup = (map._sideTownPortal > 1) ? 1 : map._sideTownPortal;
+	int arrIndex = _vm->getGameID() == GType_Swords ? 2 : sideTownPortalForLookup;
 	map.load(Res.TOWN_MAP_NUMBERS[arrIndex][townNumber - 1]);
 
 	if (_vm->getGameID() == GType_Swords) {
@@ -1223,6 +1224,7 @@ void Spells::townPortal() {
 	} else if (!_vm->_files->_ccNum) {
 		party.moveToRunLocation();
 	} else {
+		//TODO locations for mm3... use mirror coordinates?
 		switch (townNumber) {
 		case 1:
 			party._mazePosition = Common::Point(14, 11);

@@ -1669,7 +1669,8 @@ bool Scripts::ifProc(int action, uint32 val, int mode, int charIndex) {
 						break;
 					}
 				} else {
-					if (ps->_misc[idx]._id == (val - (60 + itemOffset))) {
+					if (ps->_misc[idx]._id == (val - (60 + itemOffset)) ||
+						ps->_misc[idx]._material == (val - (60 + itemOffset))) {
 						v = val;
 						break;
 					}

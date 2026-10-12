@@ -19,6 +19,8 @@
  *
  */
 
+#include "common/debug.h"
+
 #include "mm/xeen/dialogs/dialogs_input.h"
 #include "mm/xeen/scripts.h"
 #include "mm/xeen/xeen.h"
@@ -247,7 +249,8 @@ int StringInput::execute(bool type, const Common::String &expected,
 			MirrorEntry me;
 			scripts._mirror.clear();
 
-			File f(Common::Path(Common::String::format("%smirr.txt", files._ccNum ? "dark" : "xeen")), 1);
+			int fileForLookup = (files._ccNum > 1) ? files._ccNum : 1;
+			File f(Common::Path(Common::String::format("%smirr.txt", files._ccNum ? "dark" : "xeen")), fileForLookup);
 			while (me.synchronize(f))
 				scripts._mirror.push_back(me);
 			f.close();
@@ -270,6 +273,7 @@ int StringInput::execute(bool type, const Common::String &expected,
 				}
 			} else {
 				for (uint idx = 0; idx < scripts._mirror.size(); ++idx) {
+					// debug("checking mirror input text %s with entry %s \n", line.c_str(), scripts._mirror[idx]._name.c_str());
 					if (!line.compareToIgnoreCase(scripts._mirror[idx]._name)) {
 						result = idx + 1;
 						sound.playFX(_vm->_files->_ccNum ? 35 : 61);

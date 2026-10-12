@@ -91,7 +91,9 @@ const char *XeenItem::getItemName(ItemCategory category, uint id) {
 	const char **questItems = (g_vm->getGameID() == GType_Swords) ? Res.QUEST_ITEM_NAMES_SWORDS : Res.QUEST_ITEM_NAMES;
 	const uint QUEST_OFFSET = g_vm->getGameID() == GType_Swords ? 88 : 82;
 
-	if (id < QUEST_OFFSET) {
+	int ccNum = g_vm->_files->_ccNum;
+
+	if (id < QUEST_OFFSET || ccNum > 1) {
 		switch (category) {
 		case CATEGORY_WEAPON:
 			assert(id < 41);
@@ -103,7 +105,8 @@ const char *XeenItem::getItemName(ItemCategory category, uint id) {
 			assert(id < 11);
 			return Res.ACCESSORY_NAMES[id];
 		default:
-			assert(id < 22);
+			// assert(id < 22);
+			assert(id < 22 || ccNum > 1);
 			return Res.MISC_NAMES[id];
 		}
 	} else {
@@ -232,7 +235,7 @@ void InventoryItems::sort() {
 
 			// Scan through the rest of the list to find any item
 			for (uint idx2 = idx + 1; idx2 < size(); ++idx2) {
-				if (operator[](idx2)._id) {
+				if (operator[](idx2)._id || operator[](idx2)._material) {
 					// Found an item, so move it into the blank slot
 					operator[](idx) = operator[](idx2);
 					operator[](idx2).clear();

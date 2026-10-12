@@ -1141,11 +1141,13 @@ int TownPortal::execute() {
 		w.writeString(Common::String::format(Res.TOWN_PORTAL_SWORDS, townNames[0].c_str(), townNames[1].c_str(),
 			townNames[2].c_str()));
 	} else {
-		// Build up a lsit of the names of the towns on the current side of Xeen
+		int sideTownPortalForLookup = (map._sideTownPortal > 1) ? 1 : map._sideTownPortal;
+		int sideTownPortalForText = (map._sideTownPortal > 1) ? map._sideTownPortal : 1;
+		// Build up a list of the names of the towns on the current side of Xeen
 		for (int idx = 0; idx < 5; ++idx) {
-			Common::Path txtName(Common::String::format("%s%04d.txt", map._sideTownPortal ? "dark" : "xeen",
-				Res.TOWN_MAP_NUMBERS[map._sideTownPortal][idx]));
-			File f(txtName, 1);
+			Common::Path txtName(Common::String::format("%s%04d.txt", sideTownPortalForLookup ? "dark" : "xeen",
+				Res.TOWN_MAP_NUMBERS[sideTownPortalForLookup][idx]));
+			File f(txtName, sideTownPortalForText);
 			townNames[idx] = f.readString();
 			f.close();
 		}

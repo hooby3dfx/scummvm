@@ -19,6 +19,8 @@
  *
  */
 
+#include "common/debug.h"
+
 #include "common/scummsys.h"
 #include "common/algorithm.h"
 #include "mm/xeen/party.h"
@@ -764,7 +766,8 @@ void Party::giveTreasure() {
 			}
 
 			// If there's no treasure item to be distributed, skip to next slot
-			if (!_treasure[categoryNum][itemNum]._id)
+			if ((!_treasure[categoryNum][itemNum]._id && categoryNum != CATEGORY_MISC) || 
+				(!_treasure[categoryNum][itemNum]._material && categoryNum == CATEGORY_MISC))
 				continue;
 
 			int charIndex = scripts._whoWill - 1;
@@ -857,7 +860,7 @@ void Party::giveTreasureToCharacter(Character &c, ItemCategory category, int ite
 	XeenItem &treasureItem = _treasure._categories[category][itemIndex];
 	sound.playFX(20);
 
-	if (treasureItem._id < 82) {
+	if (treasureItem._id < 82 || _vm->_files->_ccNum > 1) {
 		// Copy item into the character's inventory
 		c._items[category][INV_ITEMS_TOTAL - 1] = treasureItem;
 	}
@@ -869,7 +872,7 @@ void Party::giveTreasureToCharacter(Character &c, ItemCategory category, int ite
 	int index = (category == CATEGORY_MISC) ? treasureItem._material : treasureItem._id;
 	const char *itemName = XeenItem::getItemName(category, index);
 
-	if (index >= (_vm->getGameID() == GType_Swords ? 88 : 82)) {
+	if (index >= (_vm->getGameID() == GType_Swords ? 88 : 82) && _vm->_files->_ccNum <= 1) {
 		// Quest item, give an extra '*' prefix
 		Common::String format = Common::String::format("\f04 * \fd%s", itemName);
 		Common::String ttsMessage;
@@ -980,7 +983,9 @@ bool Party::giveTake(int takeMode, uint takeVal, int giveMode, uint giveVal, int
 		const uint WEAPONS_END = _vm->getGameID() != GType_Swords ? 35 : 41;
 		const uint ARMOR_END = _vm->getGameID() != GType_Swords ? 49 : 55;
 		const uint ACCESSORIES_END = _vm->getGameID() != GType_Swords ? 60 : 66;
-		const uint MISC_END = _vm->getGameID() != GType_Swords ? 82 : 88;
+		// const uint MISC_END = _vm->getGameID() != GType_Swords ? 82 : 88;
+		const uint MISC_END = _vm->getGameID() != GType_Swords ? 
+			(files._ccNum > 1 ? 104 : 82) : 88;
 
 		if (takeVal >= MISC_END) {
 			_questItems[takeVal - MISC_END]--;
@@ -1246,7 +1251,8 @@ bool Party::giveTake(int takeMode, uint takeVal, int giveMode, uint giveVal, int
 		const uint WEAPONS_END = _vm->getGameID() != GType_Swords ? 35 : 41;
 		const uint ARMOR_END = _vm->getGameID() != GType_Swords ? 49 : 55;
 		const uint ACCESSORIES_END = _vm->getGameID() != GType_Swords ? 60 : 66;
-		const uint MISC_END = _vm->getGameID() != GType_Swords ? 82 : 88;
+		const uint MISC_END = _vm->getGameID() != GType_Swords ? 
+			(files._ccNum > 1 ? 104 : 82) : 88;
 
 		int idx;
 		if (giveVal >= MISC_END) {
@@ -1275,10 +1281,14 @@ bool Party::giveTake(int takeMode, uint takeVal, int giveMode, uint giveVal, int
 			}
 		} else {
 			for (idx = 0; idx < MAX_TREASURE_ITEMS && _treasure._misc[idx]._material; ++idx) {}
+			// for (idx = 0; idx < MAX_TREASURE_ITEMS && !_treasure._misc[idx].empty(); ++idx) {}
 			if (idx < MAX_TREASURE_ITEMS) {
 				// _treasure._accessories[idx]._material = giveVal - ACCESSORIES_END;
 				
-				_treasure._misc[idx]._id = giveVal - ACCESSORIES_END;
+				// _treasure._misc[idx]._id = giveVal - ACCESSORIES_END;
+
+				//misc items use the material field to indicate the main item code, 
+				//then the id field to indicate the 'special' item spell
 				_treasure._misc[idx]._material = giveVal - ACCESSORIES_END;
 
 				_treasure._hasItems = true;

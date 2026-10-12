@@ -330,7 +330,7 @@ public:
 	const char *WEAPON_NAMES[41];
 	const char *ARMOR_NAMES[14];
 	const char *ACCESSORY_NAMES[11];
-	const char *MISC_NAMES[22];
+	const char *MISC_NAMES[44];
 	const char *SPECIAL_NAMES[74];
 	const char *ELEMENTAL_NAMES[6];
 	const char *ATTRIBUTE_NAMES[10];

@@ -59,9 +59,9 @@ static void writeVersion() {
  * up to form the xeen data file
  */
 int main(int argc, char *argv[]) {
-	if (argc != 3) {
-		error("Format: %s dark.cc \"swords xeen.dat\"", argv[0]);
-	}
+	// if (argc != 3) {
+	// 	error("Format: %s dark.cc \"swords xeen.dat\"", argv[0]);
+	// }
 
 	writeVersion();
 	writeConstants();
@@ -70,8 +70,8 @@ int main(int argc, char *argv[]) {
 	const char *darkName = argv[1];
 	writeCloudsData(darkName);
 
-	const char *swordsDatName = argv[2];
-	writeSwordsData(swordsDatName);
+	// const char *swordsDatName = argv[2];
+	// writeSwordsData(swordsDatName);
 
 	printf("File creation done");
 	return 0;

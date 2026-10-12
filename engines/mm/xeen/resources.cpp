@@ -274,7 +274,7 @@ void Resources::loadData() {
 	file.syncStrings(WEAPON_NAMES, 41);
 	file.syncStrings(ARMOR_NAMES, 14);
 	file.syncStrings(ACCESSORY_NAMES, 11);
-	file.syncStrings(MISC_NAMES, 22);
+	file.syncStrings(MISC_NAMES, 44);
 	file.syncStrings(SPECIAL_NAMES, 74);
 	file.syncStrings(ELEMENTAL_NAMES, 6);
 	file.syncStrings(ATTRIBUTE_NAMES, 10);

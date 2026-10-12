@@ -134,7 +134,7 @@ public:
 	 * Returns true if no item is set
 	 */
 	bool empty() const {
-		return _id == 0;
+		return _id == 0 && _material == 0;
 	}
 
 	/**

@@ -172,12 +172,48 @@ void Quests::execute() {
 			}
 
 			if (_vm->_files->_ccNum == 3) {
-				// remap game bits to quest status for mm3
-				if (party._gameFlags[1][170]) {
-					lines[count++] = _questNotes[14];
+				bool mm3quest[20];
+				Common::fill(&mm3quest[0], &mm3quest[19], false);
+
+				for (int idx = 0; idx < 256; idx++) {
+					// remap game bits to quest status for mm3
+					if (party._gameFlags[1][idx]) {
+						switch (idx) {
+						case 1:
+							mm3quest[16] = true;
+							break;
+						case 2:
+							mm3quest[17] = true;
+							break;
+						case 3:
+							mm3quest[18] = true;
+							break;
+						case 4:
+						case 5:
+							mm3quest[15] = true;
+							break;
+
+						case 160:
+							mm3quest[4] = true;
+							break;
+
+						case 170:
+							mm3quest[14] = true;
+							break;
+						case 171:
+							mm3quest[14] = false;
+							break;
+
+						default:
+							break;
+						}
+					}
 				}
-				if (party._gameFlags[1][4]) {
-					lines[count++] = _questNotes[15];
+
+				for (int idx = 0; idx < 20; idx++) {
+					if (mm3quest[idx]) {
+						lines[count++] = _questNotes[idx-1];
+					}
 				}
 			}
 
